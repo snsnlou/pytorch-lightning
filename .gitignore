@@ -123,3 +123,4 @@ ENV/
 
 # data
 mnist/
+root_key
