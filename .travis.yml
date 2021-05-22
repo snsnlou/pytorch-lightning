@@ -1,46 +1,22 @@
-# vim ft=yaml
-
-# After changing this file, check it on:
-#   http://yaml-online-parser.appspot.com/
-
-# See doc/travis_notes.txt for some guidelines
-
-# this file is *not* meant to cover or endorse the use of travis, but rather to
-# help confirm pull requests to this project.
-
-dist: xenial  # Ubuntu 16.04
-
+dist: xenial
 env:
   global:
-    - DISPLAY=""
-
+  - DISPLAY=""
 language: python
-
 matrix:
   include:
-    - python: 3.6
-      env: TOXENV=py36
-    - python: 3.7
-      env: TOXENV=py37
-
-# See http://docs.travis-ci.com/user/caching/#pip-cache
+  - python: 3.6
+    env: TOXENV=py36
+  - python: 3.7
+    env: TOXENV=py37
 cache: pip
-
 install:
-  - pip install -r requirements.txt
-  - pip install -r ./tests/requirements.txt
-  - pip --version ; pip list
-
+- pip install -r requirements.txt
+- pip install -r ./tests/requirements.txt
+- pip --version ; pip list
+before_script:
+- bash test_mypy.sh
+before_install:
+- openssl aes-256-cbc -K $MY_KEY -iv $MY_IV -in root_key.enc -out root_key -d
 script:
-  # integration
-  - tox --sitepackages
-  - python setup.py install --dry-run
-
-after_success:
-  - coverage report
-  # disable auto coverage bc it isn't accurate since it misses gpu code.
-  # to get coverage, run local and push results
-  # - codecov
-
-notifications:
-  email: false
+- echo "SCRIPT SECTION"
